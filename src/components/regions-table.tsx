@@ -18,7 +18,7 @@ export function RegionsTable() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">
       {regions.map((region) => (
-        <Card>
+        <Card key={region.id}>
           <div className="flex items-center justify-between p-2">
 
            <div className='flex items-center gap-4'>

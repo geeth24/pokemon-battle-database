@@ -71,7 +71,7 @@ export function Pokemons() {
       <div className="container grid gap-6 px-4 md:gap-8 md:px-6">
         <div className="grid items-start gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
           {pokemons.map((pokemon) => (
-            <div className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]">
+            <div className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]" key={pokemon.name}>
               <Link className="absolute inset-0 z-10" href="#">
                 <span className="sr-only">View Pokémon</span>
               </Link>
