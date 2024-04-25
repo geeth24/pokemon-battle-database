@@ -1,8 +1,10 @@
+'use client';
+import { MapPin } from 'lucide-react';
 import Link from 'next/link';
-import { Card } from './ui/card';
+import { useState } from 'react';
 
 type Attribute = {
-  name: string;
+  attribute_name: string;
   weakness: string;
 };
 
@@ -12,66 +14,25 @@ type Ability = {
   status_effect: string;
 };
 
-type Pokemon = {
+export type Pokemon = {
+  pokemon_id: number;
   name: string;
+  region: string;
   abilities?: Ability[];
   attributes?: Attribute[];
 };
 
-const pokemons: Pokemon[] = [
-  {
-    name: 'Pikachu',
-    abilities: [
-      { name: 'Thunder Shock', damage: 40, status_effect: 'Paralyze' },
-      { name: 'Quick Attack', damage: 30, status_effect: 'None' },
-    ],
-    attributes: [
-      { name: 'Electric', weakness: 'Ground' },
-      { name: 'Normal', weakness: 'Fighting' },
-    ],
-  },
-  {
-    name: 'Charizard',
-    abilities: [
-      { name: 'Flamethrower', damage: 90, status_effect: 'Burn' },
-      { name: 'Fly', damage: 70, status_effect: 'None' },
-    ],
-    attributes: [
-      { name: 'Fire', weakness: 'Water' },
-      { name: 'Flying', weakness: 'Electric' },
-    ],
-  },
-  {
-    name: 'Bulbasaur',
-    abilities: [
-      { name: 'Vine Whip', damage: 45, status_effect: 'None' },
-      { name: 'Razor Leaf', damage: 55, status_effect: 'None' },
-    ],
-    attributes: [
-      { name: 'Grass', weakness: 'Fire' },
-      { name: 'Poison', weakness: 'Psychic' },
-    ],
-  },
-  {
-    name: 'Squirtle',
-    abilities: [
-      { name: 'Water Gun', damage: 40, status_effect: 'None' },
-      { name: 'Bubble', damage: 30, status_effect: 'None' },
-    ],
-    attributes: [
-      { name: 'Water', weakness: 'Electric' },
-      { name: 'Normal', weakness: 'Fighting' },
-    ],
-  },
-];
-
-export function Pokemons() {
+export function Pokemons({ pokemons: initialPokemons }: { pokemons: Pokemon[] }) {
+  const [pokemons, setPokemons] = useState<Pokemon[]>(initialPokemons);
   return (
     <section className="w-full py-12">
       <div className="container grid gap-6 px-4 md:gap-8 md:px-6">
         <div className="grid items-start gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
           {pokemons.map((pokemon) => (
-            <div className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]" key={pokemon.name}>
+            <div
+              className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]"
+              key={pokemon.name}
+            >
               <Link className="absolute inset-0 z-10" href="#">
                 <span className="sr-only">View Pokémon</span>
               </Link>
@@ -85,14 +46,14 @@ export function Pokemons() {
               <div className="flex flex-1 flex-col justify-end gap-2 rounded-lg bg-black/70 p-4 text-white transition-opacity [grid-area:stack] group-hover:opacity-90 lg:p-6">
                 <h3 className="font-semibold tracking-tight">{pokemon.name}</h3>
                 <div className="flex items-center gap-2 text-sm">
-                  <CloudLightningIcon className="h-4 w-4" />
-                  {pokemon.attributes?.map((attribute) => (
-                    <span key={attribute.name}>{attribute.name}</span>
-                  ))}
+                  <MapPin className="h-4 w-4" />
+                  <span>{pokemon.region}</span>
                 </div>
                 <div className="flex items-center gap-2 text-sm">
-                  <HeartIcon className="h-4 w-4" />
-                  <span>120 HP</span>
+                  <CloudLightningIcon className="h-4 w-4" />
+                  {pokemon.attributes?.map((attribute) => (
+                    <span key={attribute.attribute_name}>{attribute.attribute_name}</span>
+                  ))}
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <BoldIcon className="h-4 w-4" />
