@@ -64,8 +64,8 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
   };
 
   return (
-    <section className="grid grid-cols-1 gap-6 p-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <div className="col-span-1 flex justify-between sm:col-span-2 md:col-span-3 lg:col-span-4">
+    <section className="p-6">
+      <div className="flex items-center justify-between">
         <h2 className="text-2xl font-semibold">Trainers</h2>
         <Sheet>
           <SheetTrigger asChild>
@@ -120,61 +120,64 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
           </SheetContent>
         </Sheet>
       </div>
-      {trainers.map((trainer) => (
-        <Card key={trainer.trainer_id} className="p-2">
-          <div className="flex items-center justify-between p-2">
-            <div className="flex items-center gap-4">
-              <div
-                className={`rounded-full  p-2 ${trainer.gym_leader ? 'bg-primary' : 'bg-secondary'}`}
-              >
-                <ShieldIcon className="h-6 w-6 text-white" />
-              </div>
+      <Separator className='my-4' />
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {trainers.map((trainer) => (
+          <Card key={trainer.trainer_id} className="p-2">
+            <div className="flex items-center justify-between p-2">
+              <div className="flex items-center gap-4">
+                <div
+                  className={`rounded-full  p-2 ${trainer.gym_leader ? 'bg-primary' : 'bg-secondary'}`}
+                >
+                  <ShieldIcon className="h-6 w-6 text-white" />
+                </div>
 
-              <div className="space-y-1">
-                <Link className="font-semibold hover:underline" href="#">
-                  {trainer.name}
-                </Link>
+                <div className="space-y-1">
+                  <Link className="font-semibold hover:underline" href="#">
+                    {trainer.name}
+                  </Link>
+                </div>
               </div>
-            </div>
-            <div className="flex gap-2">
-              {/* <Button size="icon" variant="outline">
+              <div className="flex gap-2">
+                {/* <Button size="icon" variant="outline">
                 <FileEditIcon className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
               </Button> */}
-              <Button
-                className="text-red-500 hover:bg-red-500 hover:text-white"
-                size="icon"
-                variant="outline"
-                onClick={() => {
-                  deleteTrainer(trainer.trainer_id);
-                  setTrainers(trainers.filter((t) => t.trainer_id !== trainer.trainer_id));
-                }}
-              >
-                <TrashIcon className="h-4 w-4" />
-                <span className="sr-only">Delete</span>
-              </Button>
+                <Button
+                  className="text-red-500 hover:bg-red-500 hover:text-white"
+                  size="icon"
+                  variant="outline"
+                  onClick={() => {
+                    deleteTrainer(trainer.trainer_id);
+                    setTrainers(trainers.filter((t) => t.trainer_id !== trainer.trainer_id));
+                  }}
+                >
+                  <TrashIcon className="h-4 w-4" />
+                  <span className="sr-only">Delete</span>
+                </Button>
+              </div>
             </div>
-          </div>
-          <Separator />
-          {trainer.pokemon!.length > 0 ? (
-            <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
-              <p className="text-lg font-semibold text-foreground">Pokemons</p>
+            <Separator />
+            {trainer.pokemon!.length > 0 ? (
+              <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-lg font-semibold text-foreground">Pokemons</p>
 
-              {trainer.pokemon?.map((pokemon) => (
-                <div className="flex items-center gap-2" key={pokemon.pokemon_id}>
-                  <p className="font-semibold text-primary">{pokemon.name}</p>
-                  <span key={pokemon.pokemon_id}>{pokemon.region}</span>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
-              <p className="text-lg font-semibold text-foreground">Pokemons</p>
-              <p>No Pokemons found</p>
-            </div>
-          )}
-        </Card>
-      ))}
+                {trainer.pokemon?.map((pokemon) => (
+                  <div className="flex items-center gap-2" key={pokemon.pokemon_id}>
+                    <p className="font-semibold text-primary">{pokemon.name}</p>
+                    <span key={pokemon.pokemon_id}>{pokemon.region}</span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
+                <p className="text-lg font-semibold text-foreground">Pokemons</p>
+                <p>No Pokemons found</p>
+              </div>
+            )}
+          </Card>
+        ))}
+      </div>
     </section>
   );
 }
