@@ -16,11 +16,19 @@ import { useState } from 'react';
 import { Label } from './ui/label';
 import { Input } from './ui/input';
 import { Checkbox } from './ui/checkbox';
+import { ModeToggle } from './mode-toggle';
+import { Separator } from './ui/separator';
 
+type Pokemon = {
+  pokemon_id: number;
+  name: string;
+  region: string;
+};
 export type Trainer = {
   trainer_id: number;
   name: string;
   gym_leader: boolean;
+  pokemon?: Pokemon[];
 };
 export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] }) {
   const [trainers, setTrainers] = useState<Trainer[]>(initialTrainers);
@@ -66,6 +74,7 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
               Add Trainer
             </Button>
           </SheetTrigger>
+
           <SheetContent>
             <SheetHeader>
               <SheetTitle>Add Trainer</SheetTitle>
@@ -112,40 +121,58 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
         </Sheet>
       </div>
       {trainers.map((trainer) => (
-        <Card key={trainer.trainer_id}>
+        <Card key={trainer.trainer_id} className="p-2">
           <div className="flex items-center justify-between p-2">
             <div className="flex items-center gap-4">
-              <Avatar>
-                <AvatarImage alt="Ash Ketchum" src="/ash-ketchum.jpg" />
-                <AvatarFallback>{trainer.name[0]}</AvatarFallback>
-              </Avatar>
+              <div
+                className={`rounded-full  p-2 ${trainer.gym_leader ? 'bg-primary' : 'bg-secondary'}`}
+              >
+                <ShieldIcon className="h-6 w-6 text-white" />
+              </div>
+
               <div className="space-y-1">
                 <Link className="font-semibold hover:underline" href="#">
                   {trainer.name}
                 </Link>
-                {trainer.gym_leader && (
-                  <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <ShieldIcon className="h-4 w-4" />
-                    <span>Gym Leader</span>
-                  </div>
-                )}
               </div>
             </div>
             <div className="flex gap-2">
-              <Button size="icon" variant="outline">
+              {/* <Button size="icon" variant="outline">
                 <FileEditIcon className="h-4 w-4" />
                 <span className="sr-only">Edit</span>
-              </Button>
+              </Button> */}
               <Button
                 className="text-red-500 hover:bg-red-500 hover:text-white"
                 size="icon"
                 variant="outline"
+                onClick={() => {
+                  deleteTrainer(trainer.trainer_id);
+                  setTrainers(trainers.filter((t) => t.trainer_id !== trainer.trainer_id));
+                }}
               >
                 <TrashIcon className="h-4 w-4" />
                 <span className="sr-only">Delete</span>
               </Button>
             </div>
           </div>
+          <Separator />
+          {trainer.pokemon!.length > 0 ? (
+            <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-lg font-semibold text-foreground">Pokemons</p>
+
+              {trainer.pokemon?.map((pokemon) => (
+                <div className="flex items-center gap-2" key={pokemon.pokemon_id}>
+                  <p className="font-semibold text-primary">{pokemon.name}</p>
+                  <span key={pokemon.pokemon_id}>{pokemon.region}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-lg font-semibold text-foreground">Pokemons</p>
+              <p>No Pokemons found</p>
+            </div>
+          )}
         </Card>
       ))}
     </section>

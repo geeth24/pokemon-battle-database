@@ -14,8 +14,8 @@ type Ability = {
 
 type Pokemon = {
   name: string;
-  abilities: Ability[];
-  attributes: Attribute[];
+  abilities?: Ability[];
+  attributes?: Attribute[];
 };
 
 const pokemons: Pokemon[] = [
@@ -86,7 +86,7 @@ export function Pokemons() {
                 <h3 className="font-semibold tracking-tight">{pokemon.name}</h3>
                 <div className="flex items-center gap-2 text-sm">
                   <CloudLightningIcon className="h-4 w-4" />
-                  {pokemon.attributes.map((attribute) => (
+                  {pokemon.attributes?.map((attribute) => (
                     <span key={attribute.name}>{attribute.name}</span>
                   ))}
                 </div>
@@ -96,7 +96,7 @@ export function Pokemons() {
                 </div>
                 <div className="flex items-center gap-2 text-sm">
                   <BoldIcon className="h-4 w-4" />
-                  {pokemon.abilities.map((ability) => (
+                  {pokemon.abilities?.map((ability) => (
                     <span key={ability.name}>{ability.name}</span>
                   ))}
                 </div>
