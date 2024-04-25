@@ -2,6 +2,7 @@
 import { MapPin } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
+import { Card } from './ui/card';
 
 type Attribute = {
   attribute_name: string;
@@ -29,40 +30,42 @@ export function Pokemons({ pokemons: initialPokemons }: { pokemons: Pokemon[] })
       <div className="container grid gap-6 px-4 md:gap-8 md:px-6">
         <div className="grid items-start gap-4 md:grid-cols-2 lg:grid-cols-3 lg:gap-6 xl:grid-cols-4 xl:gap-8">
           {pokemons.map((pokemon) => (
-            <div
-              className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]"
+            <Card
+              // className="group relative grid overflow-hidden rounded-lg  [grid-template-areas:stack]"
               key={pokemon.name}
             >
-              <Link className="absolute inset-0 z-10" href="#">
+              {/* <Link className="absolute inset-0 z-10" href="#">
                 <span className="sr-only">View Pokémon</span>
-              </Link>
-              <img
-                alt="Pokémon Image"
-                className="aspect-square w-full object-cover [grid-area:stack]"
-                height="300"
-                src="/Poke Ball icon.svg"
-                width="300"
-              />
-              <div className="flex flex-1 flex-col justify-end gap-2 rounded-lg bg-black/70 p-4 text-white transition-opacity [grid-area:stack] group-hover:opacity-90 lg:p-6">
-                <h3 className="font-semibold tracking-tight">{pokemon.name}</h3>
-                <div className="flex items-center gap-2 text-sm">
-                  <MapPin className="h-4 w-4" />
-                  <span>{pokemon.region}</span>
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <CloudLightningIcon className="h-4 w-4" />
-                  {pokemon.attributes?.map((attribute) => (
-                    <span key={attribute.attribute_name}>{attribute.attribute_name}</span>
-                  ))}
-                </div>
-                <div className="flex items-center gap-2 text-sm">
-                  <BoldIcon className="h-4 w-4" />
-                  {pokemon.abilities?.map((ability) => (
-                    <span key={ability.name}>{ability.name}</span>
-                  ))}
+              </Link> */}
+              <div className="relative">
+                <img
+                  alt="Pokémon Image"
+                  className="aspect-square w-full object-cover [grid-area:stack]"
+                  height="300"
+                  src="/Poke Ball icon.svg"
+                  width="300"
+                />
+                <div className="flex flex-1 flex-col justify-end gap-2 rounded-lg bg-muted p-4 text-foreground transition-opacity [grid-area:stack] group-hover:opacity-90 lg:p-6">
+                  <h3 className="font-semibold tracking-tight">{pokemon.name}</h3>
+                  <div className="flex items-center gap-2 text-sm">
+                    <MapPin className="h-4 w-4" />
+                    <span>{pokemon.region}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <CloudLightningIcon className="h-4 w-4" />
+                    {pokemon.attributes?.map((attribute) => (
+                      <span key={attribute.attribute_name}>{attribute.attribute_name}</span>
+                    ))}
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <BoldIcon className="h-4 w-4" />
+                    {pokemon.abilities?.map((ability) => (
+                      <span key={ability.name}>{ability.name}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </Card>
           ))}
         </div>
       </div>

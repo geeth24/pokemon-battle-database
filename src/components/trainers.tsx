@@ -28,7 +28,7 @@ export type Trainer = {
   trainer_id: number;
   name: string;
   gym_leader: boolean;
-  pokemon?: Pokemon[];
+  pokemon: Pokemon[];
 };
 export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] }) {
   const [trainers, setTrainers] = useState<Trainer[]>(initialTrainers);
@@ -36,6 +36,7 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
     trainer_id: 0,
     name: '',
     gym_leader: false,
+    pokemon: [],
   });
 
   const createTrainer = async (trainer: Trainer) => {
@@ -105,7 +106,7 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
                     <Button
                       onClick={() => {
                         createTrainer(newTrainer);
-                        setNewTrainer({ trainer_id: 0, name: '', gym_leader: false });
+                        setNewTrainer({ trainer_id: 0, name: '', gym_leader: false, pokemon: [] });
                       }}
                     >
                       Add Trainer
@@ -120,7 +121,7 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
           </SheetContent>
         </Sheet>
       </div>
-      <Separator className='my-4' />
+      <Separator className="my-4" />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {trainers.map((trainer) => (
           <Card key={trainer.trainer_id} className="p-2">
@@ -158,7 +159,7 @@ export function Trainers({ trainers: initialTrainers }: { trainers: Trainer[] })
               </div>
             </div>
             <Separator />
-            {trainer.pokemon!.length > 0 ? (
+            {trainer.pokemon?.length > 0 ? (
               <div className="mt-2 flex flex-col items-start gap-2 p-2 text-sm text-gray-500 dark:text-gray-400">
                 <p className="text-lg font-semibold text-foreground">Pokemons</p>
 
